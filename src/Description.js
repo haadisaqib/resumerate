@@ -13,7 +13,6 @@ const Description = () => {
         server-side and confidential.
       </p>
       <ol>
-        <li>Input your OPENAI API Key in the textbox</li>
         <li>Upload an image/PDF of your resume</li>
         <li>Hit Submit and see your score!</li>
       </ol>
