@@ -25,22 +25,46 @@ const InputForm = () => {
     }
   }, [uploadCount]);
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const userUUID = localStorage.getItem('userUUID');
     const newUploadCount = uploadCount - 1;
-
+  
     setUploadCount(newUploadCount);
-
+  
     if (userUUID) {
       localStorage.setItem(`uploadCount_${userUUID}`, newUploadCount.toString());
     }
-
+  
     if (newUploadCount === 0) {
       document.getElementById('submitBtn').disabled = true;
     }
-
-    // TODO: Add logic to make the API call here
+  
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    const fileInput = document.querySelector('input[type="file"]');
+    formData.append('file', fileInput.files[0]);
+  
+    try {
+      const response = await fetch('http://localhost:8080/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          // Add any necessary headers here (e.g., authorization token)
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to upload file');
+      }
+  
+      // Handle successful response here
+      console.log('File uploaded successfully');
+    } catch (error) {
+      // Handle errors here
+      console.error('Error uploading file:', error.message);
+    }
   };
+  
 
   return (
     <div className="input-form">
