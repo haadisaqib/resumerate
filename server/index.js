@@ -49,7 +49,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const response = await openai.chat.completions.create({
       messages: [
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": `Your job is to rate resumes on a scale of 1-10, and provide tips to improve the essay. Return response in the following parsable JSON format:
+        {"role": "user", "content": `Your job is to rate resumes on a scale of 1-10, and provide tips to improve my resume. DO NOT critique the format of the resume (e.g: Headers, Bullet points, Font). Return response in the following parsable JSON format:
 
         {
             "R": "Rating",
@@ -64,7 +64,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     // Extract tips and rating from the OpenAI GPT API response (TODO)
     console.log(response.text);
 
-    const gptTips = response.choices[0].text;
+    const gptTips = response.choices[0];
 
     console.log('GPT Tips:', gptTips);
     // Send the extracted text and tips as a response to the client

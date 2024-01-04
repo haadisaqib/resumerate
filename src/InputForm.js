@@ -1,10 +1,9 @@
-// src/InputForm.js
-
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const InputForm = () => {
   const [uploadCount, setUploadCount] = useState(3);
+  const [serverResponse, setServerResponse] = useState(null);
 
   useEffect(() => {
     let userUUID = localStorage.getItem('userUUID');
@@ -28,22 +27,22 @@ const InputForm = () => {
   const handleUpload = async () => {
     const userUUID = localStorage.getItem('userUUID');
     const newUploadCount = uploadCount - 1;
-  
+
     setUploadCount(newUploadCount);
-  
+
     if (userUUID) {
       localStorage.setItem(`uploadCount_${userUUID}`, newUploadCount.toString());
     }
-  
+
     if (newUploadCount === 0) {
       document.getElementById('submitBtn').disabled = true;
     }
-  
+
     // Create a FormData object to send the file
     const formData = new FormData();
     const fileInput = document.querySelector('input[type="file"]');
     formData.append('file', fileInput.files[0]);
-  
+
     try {
       const response = await fetch('http://localhost:8080/upload', {
         method: 'POST',
@@ -52,11 +51,25 @@ const InputForm = () => {
           // Add any necessary headers here (e.g., authorization token)
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to upload file');
       }
-  
+
+      // Parse the JSON response from the server
+      const jsonResponse = await response.json();
+
+      // Extract tips from the OpenAI GPT API response
+      const tipsResponse = jsonResponse.tips.message.content;
+      const tipsObject = JSON.parse(tipsResponse.substring(tipsResponse.indexOf('{')));
+
+      // Update the state with the extracted tips
+      setServerResponse({
+        text: jsonResponse.text,
+        tips: tipsObject.T,
+        rating: tipsObject.R,
+      });
+
       // Handle successful response here
       console.log('File uploaded successfully');
     } catch (error) {
@@ -64,7 +77,6 @@ const InputForm = () => {
       console.error('Error uploading file:', error.message);
     }
   };
-  
 
   return (
     <div className="input-form">
@@ -75,6 +87,16 @@ const InputForm = () => {
       <button id="submitBtn" onClick={handleUpload} disabled={uploadCount === 0}>
         Submit
       </button>
+
+      {/* Display the server response on the UI */}
+      {serverResponse && (
+        <div>
+          <p>Server Response:</p>
+          <p>Rating: {serverResponse.rating}</p>
+          <p>Tips:</p>
+          <p>{serverResponse.tips}</p>
+        </div>
+      )}
     </div>
   );
 };
