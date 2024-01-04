@@ -2,6 +2,8 @@
 
 Welcome to Resume Rater, an application that leverages OCR (Optical Character Recognition) and AI to analyze resumes, providing tips and a rating for improvement.
 
+![Screenshot 2024-01-03 211151](https://github.com/haadisaqib/resumerate/assets/25376112/15eb4fba-6dc8-4b29-a286-9aa9daff6106)
+
 ## Getting Started
 
 To run the Resume Rater locally, follow these steps:
