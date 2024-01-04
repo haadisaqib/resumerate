@@ -9,7 +9,7 @@ const Description = () => {
       <p>Resume Rater is an app that will rate your resume on a scale of 10!</p>
       <h2>How it works?</h2>
       <p>
-        This app uses OPENAI GPT to analyze your resume. All processes are
+      This application leverages OCR (Optical Character Recognition) and AI to analyze resumes, providing tips and a rating for improvement. All processes are
         server-side and confidential.
       </p>
       <ol>
