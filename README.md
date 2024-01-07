@@ -11,6 +11,7 @@ To run the Resume Rater locally, follow these steps:
 1. Clone this repository.
 2. Install the necessary dependencies using `npm install`.
 3. Start the development server with `npm start`.
+4. Create an .env varible in the server directory and name it "OPENAI_GPT_KEY"
 
 **Note:** Make sure to also start the backend server located in the `resumerate/server` directory. Navigate to the `server` directory and run `node index.js`.
 
