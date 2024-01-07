@@ -6,6 +6,7 @@ const InputForm = () => {
   const [uploadCount, setUploadCount] = useState(3);
   const [serverResponse, setServerResponse] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isFileSelected, setIsFileSelected] = useState(false);
 
   useEffect(() => {
     let userUUID = localStorage.getItem('userUUID');
@@ -25,6 +26,10 @@ const InputForm = () => {
       document.getElementById('submitBtn').disabled = true;
     }
   }, [uploadCount]);
+
+  const handleFileChange = (event) => {
+    setIsFileSelected(!!event.target.files[0]); // Check if a file is selected
+  };
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -93,10 +98,10 @@ const InputForm = () => {
   return (
     <div className="input-form">
       <br />
-      <input type="file" accept=".png, .jpg, .jpeg, .pdf" />
+      <input type="file" accept=".png, .jpg, .jpeg, .pdf" onChange={handleFileChange} />
       <br />
       <p>You have {uploadCount} submits left.</p>
-      <button id="submitBtn" onClick={handleUpload} disabled={uploadCount === 0}>
+      <button id="submitBtn" onClick={handleUpload} disabled={!isFileSelected || uploadCount === 0}>
         Submit
       </button>
 
