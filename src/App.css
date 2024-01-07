@@ -5,8 +5,8 @@
   height: 100vh;
   background: linear-gradient(
     to right,
-    #87CEEB 0%,
-    #87CEEB 50%,
+    #0d6efd 0%,
+    #0d6efd 50%,
     white 50%,
     white 100%
   );
@@ -32,8 +32,8 @@
     align-items: stretch; 
     background: linear-gradient(
       to bottom,
-      #87CEEB 0%,
-      #87CEEB 50%,
+      #0d6efd 0%,
+      #0d6efd 50%,
       white 50%,
       white 100%
     );

@@ -58,7 +58,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         {"role": "system", "content": "Ok, please provide the resume and I will be analyzing it. I will format my response in a parsable JSON format"},
         {"role": 'user', "content": `Extract rating and provide tips from the following text: ${extractedText}`}],
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
     });
 
     // Extract tips and rating from the OpenAI GPT API response (TODO)
