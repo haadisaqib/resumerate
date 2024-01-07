@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import ServerResponseModal from './ServerResponseModal';
 
 const InputForm = () => {
   const [uploadCount, setUploadCount] = useState(3);
   const [serverResponse, setServerResponse] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     let userUUID = localStorage.getItem('userUUID');
@@ -23,6 +25,9 @@ const InputForm = () => {
       document.getElementById('submitBtn').disabled = true;
     }
   }, [uploadCount]);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   const handleUpload = async () => {
     const userUUID = localStorage.getItem('userUUID');
@@ -63,12 +68,18 @@ const InputForm = () => {
       const tipsResponse = jsonResponse.tips.message.content;
       const tipsObject = JSON.parse(tipsResponse.substring(tipsResponse.indexOf('{')));
 
+      // Handle both cases where "T" is a string or an array
+      const tipsArray = Array.isArray(tipsObject.T) ? tipsObject.T : [tipsObject.T];
+
       // Update the state with the extracted tips
       setServerResponse({
         text: jsonResponse.text,
-        tips: tipsObject.T,
+        tips: tipsArray,
         rating: tipsObject.R,
       });
+
+      // Show the modal with the server response
+      handleShowModal();
 
       // Handle successful response here
       console.log('File uploaded successfully');
@@ -77,6 +88,7 @@ const InputForm = () => {
       console.error('Error uploading file:', error.message);
     }
   };
+
 
   return (
     <div className="input-form">
@@ -88,15 +100,13 @@ const InputForm = () => {
         Submit
       </button>
 
-      {/* Display the server response on the UI */}
-      {serverResponse && (
-        <div>
-          <p>Server Response:</p>
-          <p>Rating: {serverResponse.rating}</p>
-          <p>Tips:</p>
-          <p>{serverResponse.tips}</p>
-        </div>
-      )}
+      {/* Display the server response in the modal */}
+      <ServerResponseModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        rating={serverResponse?.rating}
+        tips={serverResponse?.tips}
+      />
     </div>
   );
 };

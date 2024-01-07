@@ -3,24 +3,39 @@
   justify-content: center;
   align-items: center; 
   height: 100vh;
+  background: linear-gradient(
+    to right,
+    #87CEEB 0%,
+    #87CEEB 50%,
+    white 50%,
+    white 100%
+  );
 }
 
 .description {
-  padding: 20px;
-  background-color: #87CEEB; 
+  padding: 40px;
   color: white;
-  justify-content: flex-start; 
   flex: 1; 
+  text-align: center;
+  max-width:fit-content;
 }
 
 .input-form {
   padding: 20px;
   flex: 1; 
+  text-align: center;
 }
 
 @media (max-width: 768px) {
   .App {
     flex-direction: column; 
     align-items: stretch; 
+    background: linear-gradient(
+      to bottom,
+      #87CEEB 0%,
+      #87CEEB 50%,
+      white 50%,
+      white 100%
+    );
   }
 }

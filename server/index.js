@@ -49,15 +49,15 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const response = await openai.chat.completions.create({
       messages: [
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": `Your job is to rate resumes on a scale of 1-10, and provide tips to improve my resume. DO NOT critique the format of the resume (e.g: Headers, Bullet points, Font). Return response in the following parsable JSON format:
+        {"role": "user", "content": `Your job is to rate resumes on a scale of 1-10, and provide tips to improve my resume. DO NOT critique the format of the resume (e.g: Headers, Bullet points, Font). Return response in the following parsable JSON format.
 
         {
             "R": "Rating",
-            "T": "Response"
+            "T": "Tips",
         }`},
 
         {"role": "system", "content": "Ok, please provide the resume and I will be analyzing it. I will format my response in a parsable JSON format"},
-        {"role": 'user', "content": `Extract tips and rating from the following text: ${extractedText}`}],
+        {"role": 'user', "content": `Extract rating and provide tips from the following text: ${extractedText}`}],
       model: 'gpt-3.5-turbo',
     });
 
